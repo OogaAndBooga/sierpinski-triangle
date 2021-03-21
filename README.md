@@ -1,7 +1,5 @@
 # sierpinski-triangle
 python code thath draws a bunch of triangles
 
-IT DRAWS A BUNCH OF TRIANGLES
-
-LIKE THIS:
+It draws a bunch of triangles, just Like this:
 ![idk](big-triangle.png)
