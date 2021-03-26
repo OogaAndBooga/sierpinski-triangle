@@ -34,22 +34,24 @@ def draw_triangle(triangle):
     pygame.display.flip()
 
 def add_to_queue(triangle):
+    # queue.append(Triangle(get_middle(triangle.coords1, triangle.coords2), get_middle(triangle.coords2, triangle.coords3), get_middle(triangle.coords3, triangle.coords1), triangle.iteration - 1))
     queue.append(Triangle(triangle.coords1, get_middle(triangle.coords1, triangle.coords2), get_middle(triangle.coords1, triangle.coords3), triangle.iteration - 1))
     queue.append(Triangle(triangle.coords2, get_middle(triangle.coords2, triangle.coords3), get_middle(triangle.coords2, triangle.coords1), triangle.iteration - 1))
     queue.append(Triangle(triangle.coords3, get_middle(triangle.coords3, triangle.coords1), get_middle(triangle.coords3, triangle.coords2), triangle.iteration - 1))
 
-def optimized_draw_and_queue(triangle):
+def better_draw_and_queue(triangle):
     add_to_queue(triangle)
-    pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords1, triangle.coords2)), convert_to_display(get_middle(triangle.coords2, triangle.coords3)))
-    pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords2, triangle.coords3)), convert_to_display(get_middle(triangle.coords3, triangle.coords1)))
-    pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords3, triangle.coords1)), convert_to_display(get_middle(triangle.coords1, triangle.coords2)))
+    draw_triangle(Triangle(get_middle(triangle.coords1, triangle.coords2), get_middle(triangle.coords2, triangle.coords3), get_middle(triangle.coords3, triangle.coords1)))
+    # pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords1, triangle.coords2)), convert_to_display(get_middle(triangle.coords2, triangle.coords3)))
+    # pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords2, triangle.coords3)), convert_to_display(get_middle(triangle.coords3, triangle.coords1)))
+    # pygame.draw.line(screen, 'black', convert_to_display(get_middle(triangle.coords3, triangle.coords1)), convert_to_display(get_middle(triangle.coords1, triangle.coords2)))
     pygame.display.flip()
 
 
 def convert_to_display(coords):
     return (coords.x + width / 2, height / 2 - coords.y)
 
-queue = [Triangle(Coords(-500, -500), Coords(500, -500), Coords(0, 500), 6)]
+queue = [Triangle(Coords(-500, -500), Coords(500, -500), Coords(0, 500), 7)]
 
 #while len(queue) > 0:
 #    draw_triangle(queue[0])
@@ -57,11 +59,15 @@ queue = [Triangle(Coords(-500, -500), Coords(500, -500), Coords(0, 500), 6)]
 #        add_to_queue(queue[0])
 #    del queue[0]
 
+# for triangle in queue:
+#     draw_triangle(triangle)
+#     if triangle.iteration > 0:
+#         add_to_queue(triangle)
+
 draw_triangle(queue[0]) #neccesary
-while len(queue) > 0:
-    if queue[0].iteration > 0:
-        optimized_draw_and_queue(queue[0])
-    del queue[0]
+for triangle in queue:
+    if triangle.iteration > 0:
+        better_draw_and_queue(triangle)
 
 print('''DONE
         DONE
